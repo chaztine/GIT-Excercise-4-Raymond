@@ -167,7 +167,10 @@ function twentyfifteen_widgets_init() {
 	) );
 }
 add_action( 'widgets_init', 'twentyfifteen_widgets_init' );
-
+function sample_function(){
+		echo "Hello, world";
+		return true;
+}
 if ( ! function_exists( 'twentyfifteen_fonts_url' ) ) :
 /**
  * Register Google fonts for Twenty Fifteen.
