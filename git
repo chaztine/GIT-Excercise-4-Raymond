@@ -1,0 +1,56 @@
+[1mdiff --cc wp-content/themes/twentyfifteen/functions.php[m
+[1mindex 85e3925,a00913a..0000000[m
+[1m--- a/wp-content/themes/twentyfifteen/functions.php[m
+[1m+++ b/wp-content/themes/twentyfifteen/functions.php[m
+[36m@@@ -383,30 -397,32 +397,32 @@@[m [madd_filter( 'walker_nav_menu_start_el'[m
+   * @param string $html Search form HTML.[m
+   * @return string Modified search form HTML.[m
+   */[m
+[31m- function twentyfifteen_search_form_modify( $html ) {[m
+[32m+ function twentyfifteen_search_form_modify_custom( $html ) {[m
+  	return str_replace( 'class="search-submit"', 'class="search-submit screen-reader-text"', $html );[m
+  }[m
+[31m- add_filter( 'get_search_form', 'twentyfifteen_search_form_modify' );[m
+  [m
+  /**[m
+[31m-  * Modifies tag cloud widget arguments to display all tags in the same font size[m
+[31m-  * and use list format for better accessibility.[m
+[31m-  *[m
+[31m-  * @since Twenty Fifteen 1.9[m
+[31m-  *[m
+[31m-  * @param array $args Arguments for tag cloud widget.[m
+[31m-  * @return array The filtered arguments for tag cloud widget.[m
+[32m+  * Enqueue scripts.[m
+   */[m
+[31m- function twentyfifteen_widget_tag_cloud_args( $args ) {[m
+[31m- 	$args['largest']  = 22;[m
+[31m- 	$args['smallest'] = 8;[m
+[31m- 	$args['unit']     = 'pt';[m
+[31m- 	$args['format']   = 'list';[m
+[31m- [m
+[31m- 	return $args;[m
+[32m+ function custom_scripts() {[m
+[32m+     wp_enqueue_script('jquery');[m
+[32m+     wp_enqueue_script('orbitr-flexslider', get_template_directory_uri() . '/js/jquery.flexslider.js', array('jquery'));[m
+[32m+     wp_enqueue_script('orbitr-superfish', get_template_directory_uri() . '/js/superfish.js', array('jquery'));[m
+[31m -    wp_enqueue_script('orbitr-counter', get_template_directory_uri() . '/js/counter.js', array('jquery'));	[m
+[31m -    wp_enqueue_script('orbitr-countto', get_template_directory_uri() . '/js/count-to.js', array('jquery'));	[m
+[32m++    wp_enqueue_script('orbitr-counter', get_template_directory_uri() . '/js/counter.js', array('jquery'));[m
+[32m++    wp_enqueue_script('orbitr-countto', get_template_directory_uri() . '/js/count-to.js', array('jquery'));[m
+[32m+     wp_enqueue_script('orbitr-visible', get_template_directory_uri() . '/js/visible.js', array('jquery'));[m
+[32m+ 	wp_enqueue_script('header-fix', get_template_directory_uri() . '/js/header-fix.js', array('jquery'));[m
+[32m+     wp_enqueue_script('orbitr-bootstrap', get_template_directory_uri() . '/js/bootstrap.js', array('jquery'));[m
+[32m+     wp_enqueue_script('orbitr-menu', get_template_directory_uri() . '/js/menu.js', array('jquery'));[m
+[32m+     wp_enqueue_script('orbitr-custom', get_template_directory_uri() . '/js/custom.js', array('jquery'));[m
+[32m+     wp_enqueue_script('orbitr-wow', get_template_directory_uri() . '/js/wow.js', array('jquery'));[m
+[32m+     if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {[m
+[32m+         wp_enqueue_script( 'comment-reply' );[m
+[32m+     }[m
+  }[m
+[31m- add_filter( 'widget_tag_cloud_args', 'twentyfifteen_widget_tag_cloud_args' );[m
+[32m+ add_action( 'wp_enqueue_scripts', 'orbitr_scripts' );[m
+  [m
+[32m+ add_filter( 'get_search_form', 'twentyfifteen_search_form_modify' );[m
+  [m
+  /**[m
+   * Implement the Custom Header feature.[m
